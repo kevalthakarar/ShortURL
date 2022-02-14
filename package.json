@@ -1,0 +1,24 @@
+{
+  "name": "url-short",
+  "version": "1.0.0",
+  "description": "Useful for URL Shortening",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Keval Thakarar",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "helmet": "^5.0.2",
+    "monk": "^7.3.4",
+    "morgan": "^1.10.0",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
