@@ -1,14 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Short URL</title>
-    <link rel="stylesheet" href="style.css"> 
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>short url</title>
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+    async function f(){
+      let url = document.getElementById('url').value;
+      let slug = document.getElementById('slug').value;
+      
+      console.log(url);
+      console.log(slug);
+
+
+      const response = await fetch('/url', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          url: url,
+          slug: slug || undefined,
+        }),
+      });
+      /*
+          //let str = "URL : " + response.url + "\n" + "SLUG = "+ response.slug + "\n";
+          console.log(response);
+          const result = await response.json();
+          console.log(result);
+          let str = "URL : " + result.url + "\n" + "SLUG = "+ result.slug + "\n";
+          //console.log(response.body);
+          document.getElementById('dat').innerHTML = str;
+     */ 
+
+     if(response.ok){
+        
+        const result = await response.json();
+        const link = "localhost://3000/i/"+result.slug;
+        let str = "URL : <a href=" + result.url + ">"+ result.url+"</a><br>" + "SLUG  : " + result.slug
+        +"<br> Short URL : <a href=" + link + ">"+link+"</a><br>";
+        document.getElementById('dat').innerHTML = str;
+     }
+     else{
+        const result = await response.json();
+        let str = result.message;
+        document.getElementById('dat').innerHTML = str;
+     }
+
+    }
+  </script>
 </head>
 <body>
-    <header>
-        <h1>Short URL for any link</h1>
-    </header>
+
+    <h1> SHORT the URL</h1>
+
+    <label id = "timepass">Enter URL</label>
+    <input id = "url" placeholder="Enter URL">
+    <br><br>
+    <label id = "timepass2">Enter SLUG (not required)</label>
+    <input id = "slug" placeholder="Enter SLUG">
+    <br><br>
+    <button onclick="f()">Generate Short URL</button>
+
+    <div>
+        <p id = "dat"></p>
+    </div>
+
 </body>
 </html>
